@@ -1,0 +1,67 @@
+name: AppImage release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  appimage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake pkg-config python3 curl \
+            juce-modules-source libpipewire-0.3-dev libpipewire-0.3-modules \
+            libspa-0.2-modules libspeexdsp1 libwavpack1 \
+            libfreetype-dev libx11-dev libxcomposite-dev libxcursor-dev \
+            libxext-dev libxinerama-dev libxrandr-dev libxrender-dev
+      - name: Verify packaging runtime modules
+        run: |
+          module_directory="$(pkg-config --variable=moduledir libpipewire-0.3)"
+          spa_directory="$(pkg-config --variable=plugindir libspa-0.2)"
+          for module in libpipewire-module-protocol-native.so libpipewire-module-client-node.so; do
+            test -r "$module_directory/$module"
+          done
+          for module in support/libspa-support.so support/libspa-dbus.so audioconvert/libspa-audioconvert.so; do
+            test -r "$spa_directory/$module"
+          done
+      - name: Test
+        run: |
+          python3 -m unittest discover -s tests -p 'appimage_tests.py'
+          python3 -m unittest discover -s tests -p 'packaging_license_tests.py'
+          make test
+      - name: Build AppImage
+        run: make appimage
+      - name: Compress and checksum
+        working-directory: dist
+        run: |
+          tar -czf QRMForge.AppImage.tar.gz QRMForge.AppImage
+          git -C .. archive --format=tar.gz --output=dist/QRMForge-source.tar.gz HEAD
+          sha256sum QRMForge.AppImage QRMForge.AppImage.tar.gz QRMForge-source.tar.gz > SHA256SUMS
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          if ! gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release create "$RELEASE_TAG" --verify-tag --title "$RELEASE_TAG" --generate-notes
+          fi
+          gh release upload "$RELEASE_TAG" dist/QRMForge.AppImage \
+            dist/QRMForge.AppImage.tar.gz dist/QRMForge-source.tar.gz dist/SHA256SUMS --clobber

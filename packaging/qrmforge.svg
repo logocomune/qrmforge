@@ -1,0 +1,6 @@
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
+<!-- Copyright (c) 2026 Alessandro Lucaferro -->
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="48" fill="#101620"/>
+  <path d="M24 128h32l16-32 24 72 32-112 32 144 24-88 16 16h32" fill="none" stroke="#56c9e8" stroke-width="12" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,48 @@
+QRMForge — third-party software
+
+QRMForge project code: Copyright (c) 2026 Alessandro Lucaferro.
+License: GPL-3.0-only. https://github.com/logocomune/qrmforge
+
+JUCE — Raw Material Software Ltd and contributors
+Desktop interface, graphics and DSP support. GPLv3 option for the configured
+JUCE 7 distribution; individual modules retain their own notices.
+https://github.com/juce-framework/JUCE/tree/7.0.5
+
+PipeWire — PipeWire contributors
+Audio routing and processing integration. MIT/Expat core; individual modules
+and dependencies retain their respective licenses. Version depends on build host.
+https://pipewire.org/
+
+RNNoise 0.2 — Xiph.Org and contributors
+Speech noise reduction and bundled model. BSD-style license; see COPYING.
+https://github.com/xiph/rnnoise
+
+SpeexDSP — Xiph.Org and contributors
+Speech preprocessing. BSD-style license. Version depends on build host.
+https://github.com/xiph/speexdsp
+
+DeepFilterNet 0.5.6 — Hendrik Schroeter and contributors
+Speech enhancement backend and official model. MIT option selected from the
+upstream MIT OR Apache-2.0 grant. See LICENSE-MIT.
+Conservative dependency inventory and retained crate/Rust notices:
+deepfilter/INVENTORY.json and deepfilter/THIRD-PARTY-NOTICES.txt.
+https://github.com/Rikorose/DeepFilterNet/tree/v0.5.6
+
+LADSPA interface header — Richard W. E. Furse, Paul Barton-Davis and contributors
+Private DeepFilterNet ABI interface. LGPL-2.1-or-later.
+See the header notices and LADSPA-LGPL-2.1.
+https://www.ladspa.org/
+
+WavPack — David Bryant and contributors
+Lossless recording. BSD-style license. Version depends on build host.
+https://github.com/dbry/WavPack
+
+Portable packages also include desktop, font, compression and support libraries,
+plus the AppImage runtime when wrapped. Their available distribution copyright
+notices, versions and common license texts are included under usr/share/licenses.
+This credits list does not replace the original notices below or the applicable
+source-distribution requirements. Build tools are not necessarily shipped in
+QRMForge. DeepFilterNet crate notices are retained conservatively, including
+optional/build/non-Linux dependencies; the inventory records evidence and limits.
+Exact binary composition and the AppImage runtime require separate verification;
+this list is not a complete binary SBOM.

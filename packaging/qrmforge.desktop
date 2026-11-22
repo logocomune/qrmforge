@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (c) 2026 Alessandro Lucaferro
+
+[Desktop Entry]
+Type=Application
+Name=QRMForge
+Comment=Process PipeWire audio with integrated DSP and spectrum monitoring
+Exec=qrmforge
+Icon=qrmforge
+StartupWMClass=QRMForge
+Terminal=false
+Categories=AudioVideo;Audio;
